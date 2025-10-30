@@ -1,20 +1,20 @@
 const Joi = require('joi');
 
 // Auth validators
-exports.registerSchema = Joi.object({
+const registerSchema = Joi.object({
   name: Joi.string().min(2).max(50).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   role: Joi.string().valid('USER', 'ADMIN').default('USER')
 });
 
-exports.loginSchema = Joi.object({
+const loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required()
 });
 
 // Product validators
-exports.createProductSchema = Joi.object({
+const createProductSchema = Joi.object({
   name: Joi.string().min(2).max(100).required(),
   description: Joi.string().min(10).required(),
   price: Joi.number().min(0).required(),
@@ -23,7 +23,7 @@ exports.createProductSchema = Joi.object({
   }).required()
 });
 
-exports.updateProductSchema = Joi.object({
+const updateProductSchema = Joi.object({
   name: Joi.string().min(2).max(100),
   description: Joi.string().min(10),
   price: Joi.number().min(0),
@@ -33,12 +33,21 @@ exports.updateProductSchema = Joi.object({
 }).min(1);
 
 // Cart validators
-exports.addCartItemSchema = Joi.object({
+const addCartItemSchema = Joi.object({
   productId: Joi.string().required(),
   quantity: Joi.number().min(1).required()
 });
 
 // Order validators
-exports.updateOrderStatusSchema = Joi.object({
+const updateOrderStatusSchema = Joi.object({
   status: Joi.string().valid('SHIPPED', 'DELIVERED').required()
 });
+
+module.exports = {
+  registerSchema,
+  loginSchema,
+  createProductSchema,
+  updateProductSchema,
+  addCartItemSchema,
+  updateOrderStatusSchema
+};

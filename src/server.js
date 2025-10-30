@@ -2,15 +2,7 @@ require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/database');
-// const errorHandler = require('./middleware/errorHandler');
-
-// Import routes
-const authRoutes = require('./routes/auth');
-// These routes will be implemented later
-// const productRoutes = require('./routes/products');
-// const cartRoutes = require('./routes/cart');
-// const orderRoutes = require('./routes/orders');
-// const adminRoutes = require('./routes/admin');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
@@ -22,18 +14,23 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/auth', authRoutes);
-// These routes will be implemented later
-// app.use('/api/products', productRoutes);
-// app.use('/api/cart', cartRoutes);
-// app.use('/api/orders', orderRoutes);
-// app.use('/api/admin', adminRoutes);
-
-// // Health check
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
+
+// Import and use routes
+const authRoutes = require('./routes/auth');
+const productRoutes = require('./routes/products');
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/orders');
+const adminRoutes = require('./routes/admin');
+
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Error handling middleware (must be last)
 // app.use(errorHandler);
