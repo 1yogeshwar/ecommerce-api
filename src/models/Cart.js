@@ -48,6 +48,14 @@ cartSchema.methods.addItem = async function (productId, quantity) {
 };
 
 /**
+ * 🧹 Clear all items from the cart
+ */
+cartSchema.methods.clearCart = function() {
+  this.items = [];
+  return this;
+};
+
+/**
  * ❌ Remove an item from the cart
  */
 cartSchema.methods.removeItem = async function (productId) {
